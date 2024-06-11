@@ -16,7 +16,7 @@ public class MessageCopy : ResoniteMod
 {
     public override string Name => "MessageCopy";
     public override string Author => "art0007i";
-    public override string Version => "1.0.0";
+    public override string Version => "1.0.1";
     public override string Link => "https://github.com/art0007i/MessageCopy/";
     public override void OnEngineInit()
     {
