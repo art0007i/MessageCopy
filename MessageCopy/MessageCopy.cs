@@ -16,7 +16,7 @@ public class MessageCopy : ResoniteMod
 {
     public override string Name => "MessageCopy";
     public override string Author => "art0007i";
-    public override string Version => "1.0.1";
+    public override string Version => "1.0.2";
     public override string Link => "https://github.com/art0007i/MessageCopy/";
     public override void OnEngineInit()
     {
@@ -46,6 +46,11 @@ public class MessageCopy : ResoniteMod
                     SessionInfo sessionInfo = message.ExtractContent<SessionInfo>();
                     copyText = sessionInfo.SessionId + "\n" + string.Join("\n", sessionInfo.SessionURLs);
                     break;
+                case SkyFrost.Base.MessageType.InviteRequest:
+                    return; // Not sure what this should do
+                default:
+                    Warn("Unknown message type: " + message.MessageType);
+                    return;
             }
 
             Slot copyButton = __result.Slot.Children.Last().AddSlot("Copy");
