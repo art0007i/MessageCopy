@@ -1,30 +1,29 @@
-using HarmonyLib;
-using ResoniteModLoader;
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using BepInEx;
+using BepInEx.Logging;
+using BepInEx.NET.Common;
+using BepInExResoniteShim;
+using Elements.Core;
 using FrooxEngine;
 using FrooxEngine.UIX;
+using HarmonyLib;
 using SkyFrost.Base;
-using Elements.Core;
 
 namespace MessageCopy;
 
-public class MessageCopy : ResoniteMod
+[ResonitePlugin(PluginMetadata.GUID, PluginMetadata.NAME, PluginMetadata.VERSION, PluginMetadata.AUTHORS, PluginMetadata.REPOSITORY_URL)]
+[BepInDependency(BepInExResoniteShim.PluginMetadata.GUID, BepInDependency.DependencyFlags.HardDependency)]
+public class Plugin : BasePlugin
 {
-    public override string Name => "MessageCopy";
-    public override string Author => "art0007i";
-    public override string Version => "1.0.2";
-    public override string Link => "https://github.com/art0007i/MessageCopy/";
-    public override void OnEngineInit()
-    {
-        Harmony harmony = new Harmony("me.art0007i.MessageCopy");
-        harmony.PatchAll();
+#nullable disable
+    internal static new ManualLogSource Log;
+#nullable enable
 
+    public override void Load()
+    {
+        Log = base.Log;
+        HarmonyInstance.PatchAll();
     }
-    [HarmonyPatch(typeof(ContactsDialog), "AddMessage")]
+      [HarmonyPatch(typeof(ContactsDialog), "AddMessage")]
     class MessageCopyPatch
     {
         public static void Postfix(Image __result, UIBuilder ___messagesUi, Message message)
@@ -49,7 +48,7 @@ public class MessageCopy : ResoniteMod
                 case SkyFrost.Base.MessageType.InviteRequest:
                     return; // Not sure what this should do
                 default:
-                    Warn("Unknown message type: " + message.MessageType);
+                    Log.LogWarning("Unknown message type: " + message.MessageType);
                     return;
             }
 

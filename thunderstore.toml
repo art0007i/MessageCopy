@@ -1,0 +1,42 @@
+# This file is used by the Thunderstore CLI to build and publish your mod to Thunderstore. https://github.com/thunderstore-io/thunderstore-cli
+
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "art0007i"
+name = "MessageCopy"
+description = "Allows you to copy all messages, not just text."
+websiteUrl = "https://github.com/art0007i/MessageCopy"
+containsNsfwContent = false
+
+[package.dependencies] 
+ResoniteModding-BepisLoader = "1.5.1"
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "./build"
+
+[[build.copy]]
+source = "./Plugin/bin/Release/MessageCopy.dll"
+target = "plugins/MessageCopy/"
+
+[[build.copy]]
+source = "./Plugin/bin/Release/MessageCopy.pdb"
+target = "plugins/MessageCopy/"
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = "/"
+
+[[build.copy]]
+source = "./LICENSE"
+target = "/"
+
+[publish]
+repository = "https://thunderstore.io"
+communities = ["resonite"]
+
+[publish.categories]
+resonite = [ "mods" ] # TODO: Change this to your mod's categories, see https://thunderstore.io/api/experimental/community/resonite/category/ for a list of available categories
